@@ -423,7 +423,7 @@ SPEC CHECKSUMS:
   ExpoModulesCore: f16da48955ea71a71e423fba8a09d00a18946214
   EXSplashScreen: c4333e4d7a89cc3f7452166527d207c725d3c2a5
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: 7a96dfb579a037b5b5f7da4e0a091ee42a5a017a
+  FBReactNativeSpec: bdbc553e7aac2d73cb2b6829ee09c8b8168a5a78
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: d34bf57e17cb6e3b2681f4809b13843c021feb6c
