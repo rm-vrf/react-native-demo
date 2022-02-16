@@ -11,8 +11,12 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		436911A727BCCB9600392097 /* RCTCalendarModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 436911A627BCCB9600392097 /* RCTCalendarModule.m */; };
-		436911A827BCCB9600392097 /* RCTCalendarModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 436911A627BCCB9600392097 /* RCTCalendarModule.m */; };
+		4326F73A27BD0F2B00906A4D /* RCTCalendarModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4326F73927BD0F2B00906A4D /* RCTCalendarModule.m */; };
+		4326F73B27BD0F2B00906A4D /* RCTCalendarModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4326F73927BD0F2B00906A4D /* RCTCalendarModule.m */; };
+		4326F73F27BD113900906A4D /* BarcodeScannerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326F73E27BD113900906A4D /* BarcodeScannerWrapper.swift */; };
+		4326F74027BD113900906A4D /* BarcodeScannerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326F73E27BD113900906A4D /* BarcodeScannerWrapper.swift */; };
+		4326F74527BD156300906A4D /* BarcodeScannerWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4326F74427BD156300906A4D /* BarcodeScannerWrapper.m */; };
+		4326F74627BD156300906A4D /* BarcodeScannerWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4326F74427BD156300906A4D /* BarcodeScannerWrapper.m */; };
 		67467ADCD8F8FF02BDBA2FC2 /* libPods-ReactNativeDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA67184BD2CDCA5074039C8 /* libPods-ReactNativeDemo.a */; };
 		7C24FBE09C58F171C2CE875D /* libPods-ReactNativeDemo-ReactNativeDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCDEC0427E2A3985E3E26613 /* libPods-ReactNativeDemo-ReactNativeDemoTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -40,8 +44,12 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ReactNativeDemo/main.m; sourceTree = "<group>"; };
 		1AA67184BD2CDCA5074039C8 /* libPods-ReactNativeDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		320412325D7D765A0D56D477 /* Pods-ReactNativeDemo-ReactNativeDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo-ReactNativeDemoTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo-ReactNativeDemoTests/Pods-ReactNativeDemo-ReactNativeDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		4326F73927BD0F2B00906A4D /* RCTCalendarModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCTCalendarModule.m; path = ReactNativeDemo/RCTCalendarModule.m; sourceTree = "<group>"; };
+		4326F73E27BD113900906A4D /* BarcodeScannerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BarcodeScannerWrapper.swift; path = ReactNativeDemo/BarcodeScannerWrapper.swift; sourceTree = "<group>"; };
+		4326F74227BD125D00906A4D /* ReactNativeDemo-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ReactNativeDemo-Bridging-Header.h"; path = "ReactNativeDemo/ReactNativeDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		4326F74327BD13BA00906A4D /* ReactNativeDemoTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ReactNativeDemoTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		4326F74427BD156300906A4D /* BarcodeScannerWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeScannerWrapper.m; sourceTree = "<group>"; };
 		436911A527BCCB0400392097 /* RCTCalendarModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTCalendarModule.h; path = ReactNativeDemo/RCTCalendarModule.h; sourceTree = "<group>"; };
-		436911A627BCCB9600392097 /* RCTCalendarModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTCalendarModule.m; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNativeDemo/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8984EEBB3928943EC7E86B4E /* Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo-ReactNativeDemoTests/Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A8009474BED53957C3F7135 /* Pods-ReactNativeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo/Pods-ReactNativeDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +81,7 @@
 		00E356EF1AD99517003FC87E /* ReactNativeDemoTests */ = {
 			isa = PBXGroup;
 			children = (
+				4326F74327BD13BA00906A4D /* ReactNativeDemoTests-Bridging-Header.h */,
 				00E356F21AD99517003FC87E /* ReactNativeDemoTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
@@ -90,6 +99,8 @@
 		13B07FAE1A68108700A75B9A /* ReactNativeDemo */ = {
 			isa = PBXGroup;
 			children = (
+				4326F74227BD125D00906A4D /* ReactNativeDemo-Bridging-Header.h */,
+				4326F73927BD0F2B00906A4D /* RCTCalendarModule.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -97,7 +108,8 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				436911A527BCCB0400392097 /* RCTCalendarModule.h */,
-				436911A627BCCB9600392097 /* RCTCalendarModule.m */,
+				4326F73E27BD113900906A4D /* BarcodeScannerWrapper.swift */,
+				4326F74427BD156300906A4D /* BarcodeScannerWrapper.m */,
 			);
 			name = ReactNativeDemo;
 			sourceTree = "<group>";
@@ -210,10 +222,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 1320;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1320;
 					};
 				};
 			};
@@ -408,8 +421,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4326F74027BD113900906A4D /* BarcodeScannerWrapper.swift in Sources */,
+				4326F74627BD156300906A4D /* BarcodeScannerWrapper.m in Sources */,
+				4326F73B27BD0F2B00906A4D /* RCTCalendarModule.m in Sources */,
 				00E356F31AD99517003FC87E /* ReactNativeDemoTests.m in Sources */,
-				436911A827BCCB9600392097 /* RCTCalendarModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,9 +432,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				436911A727BCCB9600392097 /* RCTCalendarModule.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				4326F73F27BD113900906A4D /* BarcodeScannerWrapper.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				4326F74527BD156300906A4D /* BarcodeScannerWrapper.m in Sources */,
+				4326F73A27BD0F2B00906A4D /* RCTCalendarModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,7 +455,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8984EEBB3928943EC7E86B4E /* Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -457,6 +476,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeDemoTests/ReactNativeDemoTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReactNativeDemo.app/ReactNativeDemo";
 			};
 			name = Debug;
@@ -465,7 +487,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 320412325D7D765A0D56D477 /* Pods-ReactNativeDemo-ReactNativeDemoTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = ReactNativeDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -481,6 +505,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeDemoTests/ReactNativeDemoTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReactNativeDemo.app/ReactNativeDemo";
 			};
 			name = Release;
@@ -506,6 +532,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ReactNativeDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeDemo/ReactNativeDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -532,6 +559,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ReactNativeDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeDemo/ReactNativeDemo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
