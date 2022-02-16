@@ -2,7 +2,7 @@
 //  BarcodeScannerWrapper.m
 //  ReactNativeDemo
 //
-//  Created by htlu on 2022/2/16.
+//  Created by lu on 2022/2/16.
 //
 
 #import <Foundation/Foundation.h>
