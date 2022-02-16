@@ -10,8 +10,8 @@ import * as React from 'react';
 import { Text, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import NativeMethodScreen from './components/NativeMethod';
-import BarcodeScannerScreen from './components/BarcodeScanner';
+import NativeMethod from './components/NativeMethod';
+import BarcodeScanner from './components/BarcodeScanner';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,8 +21,8 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'React Native Demo' }} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="NativeMethod" component={NativeMethodScreen} />
-        <Stack.Screen name="BarcodeScanner" component={BarcodeScannerScreen} />
+        <Stack.Screen name="NativeMethod" component={NativeMethod} />
+        <Stack.Screen name="BarcodeScanner" component={BarcodeScanner} />
       </Stack.Navigator>
     </NavigationContainer>
   );
