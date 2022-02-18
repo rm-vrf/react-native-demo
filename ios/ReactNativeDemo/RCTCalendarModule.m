@@ -12,7 +12,7 @@
 @implementation RCTCalendarModule
 
 // To export a module named RCTCalendarModule
-RCT_EXPORT_MODULE();
+RCT_EXPORT_MODULE(RCTCalendarModule);
 
 RCT_EXPORT_METHOD(createCalendarEvent:(NSString *)title
                   location:(NSString *)location
