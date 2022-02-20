@@ -1,11 +1,16 @@
 import * as React from 'react';
-import { NativeModules, Text, Button } from 'react-native';
+import { NativeModules, NativeEventEmitter, Text, Button } from 'react-native';
 
 const BarcodeScanner = () => {
     const [code, setCode] = React.useState({type: null, value: null});
 
     const { BarcodeScannerWrapper } = NativeModules;
     console.log(BarcodeScannerWrapper);
+    
+    const BarcodeScannerEvent = new NativeEventEmitter(NativeModules.BarcodeScannerWrapper)
+    BarcodeScannerEvent.addListener("onScan", e => {
+        console.log(e);
+    });
 
     React.useEffect(() => {
         console.log('didLoad');

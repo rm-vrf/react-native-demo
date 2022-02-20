@@ -9,26 +9,29 @@ import Foundation
 import AVFoundation
 
 @objc(BarcodeScannerWrapper)
-class BarcodeScannerWrapper: NSObject, AVCaptureMetadataOutputObjectsDelegate {
+class BarcodeScannerWrapper: RCTEventEmitter, AVCaptureMetadataOutputObjectsDelegate {
   private var captureSession: AVCaptureSession!
   private var previewLayer: AVCaptureVideoPreviewLayer!
   private var resolve: RCTPromiseResolveBlock!
   private var reject: RCTPromiseRejectBlock!
 
-  @objc
-  func constantsToExport() -> [AnyHashable: Any]! {
+  override func constantsToExport() -> [AnyHashable: Any]! {
     return ["defaultType": "N/A", "defaultValue": "N/A"]
   }
   
-  @objc
-  func requiresMainQueueSetup() -> Bool {
-    return true
+  @objc func requiresMainQueueSetup() -> Bool {
+    return false
+  }
+  
+  override func supportedEvents() -> [String]! {
+    return ["onScan"]
   }
   
   @objc
   func scanBarcode(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
     self.resolve = resolve
     self.reject = reject
+    sendEvent(withName: "onScan", body: "create")
     
     captureSession = AVCaptureSession()
     guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
@@ -66,15 +69,18 @@ class BarcodeScannerWrapper: NSObject, AVCaptureMetadataOutputObjectsDelegate {
 //      previewLayer.videoGravity = .resizeAspectFill
 //      view.layer.addSublayer(previewLayer)
 //    }
+    sendEvent(withName: "onScan", body: "start")
     captureSession.startRunning()
   }
     
   func failed() {
+    sendEvent(withName: "onScan", body: "failed")
     let error = NSError(domain: "react.native.demo", code: 500, userInfo: nil)
     reject("E_BARCODESCAN", "error when scan barcode", error)
   }
     
   func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+    sendEvent(withName: "onScan", body: "capture")
     captureSession.stopRunning()
 
     if let metadataObject = metadataObjects.first {
@@ -88,6 +94,6 @@ class BarcodeScannerWrapper: NSObject, AVCaptureMetadataOutputObjectsDelegate {
     
   func found(code: String) {
     print(code)
-    resolve(["type": "EAN-13", "value": "\(code)"])
+    resolve(["type": "N/A", "value": "\(code)"])
   }
 }
