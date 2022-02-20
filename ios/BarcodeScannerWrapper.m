@@ -7,8 +7,9 @@
 
 #import <Foundation/Foundation.h>
 #import "React/RCTBridgeModule.h"
+#import "React/RCTEventEmitter.h"
 
-@interface RCT_EXTERN_MODULE(BarcodeScannerWrapper, NSObject)
+@interface RCT_EXTERN_MODULE(BarcodeScannerWrapper, RCTEventEmitter)
 
 RCT_EXTERN_METHOD(
                   scanBarcode: (RCTPromiseResolveBlock)resolve
