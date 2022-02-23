@@ -13,4 +13,8 @@
 
 RCT_EXPORT_VIEW_PROPERTY(onScanSuccess, RCTDirectEventBlock)
 
+RCT_EXPORT_VIEW_PROPERTY(title, NSString)
+
+RCT_EXPORT_VIEW_PROPERTY(action, NSString)
+
 @end

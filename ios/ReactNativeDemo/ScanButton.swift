@@ -21,6 +21,22 @@ class ScanButton : UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
+  @objc
+  var title: String = "" {
+    didSet {
+      button.setTitle(title, for: .normal)
+    }
+  }
+  
+  @objc
+  var action: String = "" {
+    didSet {
+      if action == "scan" {
+        didScan()
+      }
+    }
+  }
+  
   lazy var button: UIButton = {
     let b = UIButton.init(type: UIButton.ButtonType.system)
     b.setTitle("Scan", for: .normal)
