@@ -13,6 +13,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import NativeMethod from './components/NativeMethod';
 import BarcodeScanner from './components/BarcodeScanner';
 import BarcodeScannerPreview from './components/BarcodeScannerPreview';
+import NetInfoDemo from './components/NetInfoDemo';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ const App = () => {
         <Stack.Screen name="NativeMethod" component={NativeMethod} />
         <Stack.Screen name="BarcodeScanner" component={BarcodeScanner} />
         <Stack.Screen name="BarcodeScannerPreview" component={BarcodeScannerPreview} />
+        <Stack.Screen name="NetInfoDemo" component={NetInfoDemo} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -37,6 +39,7 @@ const HomeScreen = ({ navigation }) => {
       <Button title="Call native method" onPress={() => navigation.navigate('NativeMethod', {})} />
       <Button title="Scan barcode" onPress={() => navigation.navigate('BarcodeScanner', {})} />
       <Button title="Scan barcode (preview)" onPress={() => navigation.navigate('BarcodeScannerPreview', {})} />
+      <Button title="Net info" onPress={() => navigation.navigate('NetInfoDemo', {})} />
     </>
   );
 };
