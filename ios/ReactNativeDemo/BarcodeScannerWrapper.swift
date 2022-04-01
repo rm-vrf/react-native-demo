@@ -61,14 +61,16 @@ class BarcodeScannerWrapper: RCTEventEmitter, AVCaptureMetadataOutputObjectsDele
       failed()
       return
     }
-    
-//    let controller = RCTPresentedViewController();
-//    if let view = controller?.view {
-//      previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-//      previewLayer.frame = view.layer.bounds
-//      previewLayer.videoGravity = .resizeAspectFill
-//      view.layer.addSublayer(previewLayer)
-//    }
+
+    DispatchQueue.main.async {
+      let controller = RCTPresentedViewController();
+      if let view = controller?.view {
+        self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+        self.previewLayer.frame = view.layer.bounds
+        self.previewLayer.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(self.previewLayer)
+      }
+    }
     sendEvent(withName: "onScan", body: "start")
     captureSession.startRunning()
   }
@@ -87,7 +89,7 @@ class BarcodeScannerWrapper: RCTEventEmitter, AVCaptureMetadataOutputObjectsDele
       guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
       guard let stringValue = readableObject.stringValue else { return }
       AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-      //previewLayer.dismiss()
+      previewLayer.removeFromSuperlayer()
       found(code: stringValue)
     }
   }
