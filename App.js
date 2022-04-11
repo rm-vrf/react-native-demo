@@ -14,6 +14,8 @@ import NativeMethod from './components/NativeMethod';
 import BarcodeScanner from './components/BarcodeScanner';
 import BarcodeScannerPreview from './components/BarcodeScannerPreview';
 import NetInfoDemo from './components/NetInfoDemo';
+import LocalNotification from './components/LocalNotification';
+import RemoteNotification from './components/RemoteNotification';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +29,8 @@ const App = () => {
         <Stack.Screen name="BarcodeScanner" component={BarcodeScanner} />
         <Stack.Screen name="BarcodeScannerPreview" component={BarcodeScannerPreview} />
         <Stack.Screen name="NetInfoDemo" component={NetInfoDemo} />
+        <Stack.Screen name="LocalNotification" component={LocalNotification} />
+        <Stack.Screen name="RemoteNotification" component={RemoteNotification} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -40,6 +44,8 @@ const HomeScreen = ({ navigation }) => {
       <Button title="Scan barcode" onPress={() => navigation.navigate('BarcodeScanner', {})} />
       <Button title="Scan barcode (preview)" onPress={() => navigation.navigate('BarcodeScannerPreview', {})} />
       <Button title="Net info" onPress={() => navigation.navigate('NetInfoDemo', {})} />
+      <Button title="Local notification" onPress={() => navigation.navigate('LocalNotification', {})} />
+      <Button title="Remote notification" onPress={() => navigation.navigate('RemoteNotification', {})} />
     </>
   );
 };
