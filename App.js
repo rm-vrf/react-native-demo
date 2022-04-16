@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, Button, Image, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -29,22 +29,26 @@ const App = ({ isHeadless }) => {
     return null;
   }
 
+  const [ fcmToken, setFcmToken ] = useState(null);
+
   useEffect(() => {
     messaging().requestPermission().then(authStatus => {
       console.log("APN status: ", authStatus);
       if (authStatus === messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL) {
         // get FCM token
-        messaging().getToken().then(fcmToken => {
-          if (fcmToken) {
-            console.log("Get FCM token: ", fcmToken); //TODO: Send token to provider
+        messaging().getToken().then(token => {
+          if (token) {
+            console.log("Get FCM token: ", token); //TODO: Send token to provider
+            setFcmToken(token);
           } else {
             console.log("Fail", "no token received");
           }
         });
 
         // refresh FCM token
-        messaging().onTokenRefresh(fcmToken => {
-          console.log("Refresh FCM token: ", fcmToken); //TODO: Send token to provider
+        messaging().onTokenRefresh(token => {
+          console.log("Refresh FCM token: ", token); //TODO: Send token to provider
+          setFcmToken(token);
         });
       
         // Subscribe dailyNews topic
@@ -89,7 +93,7 @@ const App = ({ isHeadless }) => {
         <Stack.Screen name="BarcodeScannerPreview" component={BarcodeScannerPreview} />
         <Stack.Screen name="NetInfoDemo" component={NetInfoDemo} />
         <Stack.Screen name="LocalNotification" component={LocalNotification} />
-        <Stack.Screen name="RemoteNotification" component={RemoteNotification} />
+        <Stack.Screen name="RemoteNotification" component={RemoteNotification} initialParams={{ fcmToken: fcmToken }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -99,7 +103,7 @@ const forwardRemoteNotification = (remoteMessage) => {
   navigationRef.current.navigate({
     name: 'RemoteNotification',
     params: {
-      message: JSON.stringify(remoteMessage)
+      remoteMessage: remoteMessage
     }
   });
 };
@@ -113,7 +117,7 @@ const HomeScreen = ({ navigation }) => {
       <Button title="Scan barcode (preview)" onPress={() => navigation.navigate('BarcodeScannerPreview', {})} />
       <Button title="Net info" onPress={() => navigation.navigate('NetInfoDemo', {})} />
       <Button title="Local notification" onPress={() => navigation.navigate('LocalNotification', {})} />
-      <Button title="Remote notification" onPress={() => navigation.navigate('RemoteNotification', {message: "nil"})} />
+      <Button title="Remote notification" onPress={() => navigation.navigate('RemoteNotification', {})} />
     </>
   );
 };
