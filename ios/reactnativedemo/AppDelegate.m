@@ -52,6 +52,10 @@ static void InitializeFlipper(UIApplication *application) {
   return YES;
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+  [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+}
+
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
