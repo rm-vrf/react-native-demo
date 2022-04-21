@@ -23,9 +23,8 @@ const navigationRef = React.createRef();
 
 const App = ({ isHeadless }) => {
   // isHeadless is 'true' when iOS start App on click notification
-  console.log("isHeadless: ", isHeadless);
   if (isHeadless) {
-    console.log("App is start on click notification");
+    console.log('App launched by iOS in background. Ignore it!');
     return null;
   }
 
@@ -38,7 +37,7 @@ const App = ({ isHeadless }) => {
         // get FCM token
         messaging().getToken().then(token => {
           if (token) {
-            console.log("Get FCM token: ", token); //TODO: Send token to provider
+            console.log("Get FCM token: ", token);
             setFcmToken(token);
           } else {
             console.log("Fail", "no token received");
@@ -47,7 +46,7 @@ const App = ({ isHeadless }) => {
 
         // refresh FCM token
         messaging().onTokenRefresh(token => {
-          console.log("Refresh FCM token: ", token); //TODO: Send token to provider
+          console.log("Refresh FCM token: ", token);
           setFcmToken(token);
         });
       
@@ -55,20 +54,25 @@ const App = ({ isHeadless }) => {
         messaging().subscribeToTopic('dailyNews').then(() => {
           console.log('Subscribe topic: dailyNews');
         });
-
-        // Receive notification message when app is down
-        messaging().getInitialNotification().then(remoteMessage => {
-          console.log("Init notification when app is down, ", remoteMessage);
-        });
-
-        // Open notification message
-        messaging().onNotificationOpenedApp(remoteMessage => {
-          console.log("Open message when app in background, ", remoteMessage);
-          forwardRemoteNotification(remoteMessage);
-        });
       }
     });
   
+    // Receive notification message when app is down
+    messaging().getInitialNotification().then(remoteMessage => {
+      if (remoteMessage) {
+        console.log("Init notification when app is down, ", remoteMessage);
+        forwardRemoteNotification(remoteMessage);
+      }
+    });
+    
+    // Open notification message
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      if (remoteMessage) {
+        console.log("Open message when app in background, ", remoteMessage);
+        forwardRemoteNotification(remoteMessage);
+      }
+    });
+
     // Receive notification message when app is on
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage), [{
@@ -80,6 +84,7 @@ const App = ({ isHeadless }) => {
         onPress: () => forwardRemoteNotification(remoteMessage)
       }]);
     });
+
     return unsubscribe;
   }, []);
 
