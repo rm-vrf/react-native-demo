@@ -16,6 +16,7 @@ import BarcodeScannerPreview from './components/BarcodeScannerPreview';
 import NetInfoDemo from './components/NetInfoDemo';
 import LocalNotification from './components/LocalNotification';
 import RemoteNotification from './components/RemoteNotification';
+import NativePackage from "./components/NativePackage";
 import messaging from '@react-native-firebase/messaging';
 
 const Stack = createNativeStackNavigator();
@@ -99,6 +100,7 @@ const App = ({ isHeadless }) => {
         <Stack.Screen name="NetInfoDemo" component={NetInfoDemo} />
         <Stack.Screen name="LocalNotification" component={LocalNotification} />
         <Stack.Screen name="RemoteNotification" component={RemoteNotification} initialParams={{ fcmToken: fcmToken }} />
+        <Stack.Screen name="NativePackage" component={NativePackage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -123,6 +125,7 @@ const HomeScreen = ({ navigation }) => {
       <Button title="Net info" onPress={() => navigation.navigate('NetInfoDemo', {})} />
       <Button title="Local notification" onPress={() => navigation.navigate('LocalNotification', {})} />
       <Button title="Remote notification" onPress={() => navigation.navigate('RemoteNotification', {})} />
+      <Button title="Native package" onPress={() => navigation.navigate('NativePackage', {})} />
     </>
   );
 };
