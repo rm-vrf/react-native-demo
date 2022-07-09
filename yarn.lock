@@ -5736,6 +5736,11 @@ react-native-codegen@^0.0.8:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
+react-native-develop-branch-toast@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-develop-branch-toast/-/react-native-develop-branch-toast-1.0.5.tgz#20c85743dc9ffd875597ac06c66c1ec950fbb7d9"
+  integrity sha512-1zD9RePUZ7shFeQgFG6GdsjyrRCRl7Lz+owu4Q3BnnPPeHPTYAMx2cAGJvi2xl3g//Hn9n/eWMDJeJhbH9GoUA==
+
 react-native-safe-area-context@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz#9549a2ce580f2374edb05e49d661258d1b8bcaed"
