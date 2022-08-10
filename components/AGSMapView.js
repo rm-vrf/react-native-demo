@@ -39,6 +39,10 @@ class ArcGISMapView extends React.Component {
         NativeModules.RNArcGISMapViewManager.removeGraphicsOverlayViaManager(overlayId);
     }
 
+    addGeodatabase = (geodatabaseData) => {
+        NativeModules.RNArcGISMapViewManager.addGeodatabaseViaManager(geodatabaseData);
+    }
+
     // MARK: Render
     render() {
         return <AGSMap {...this.props} ref={this.agsMapRef} />

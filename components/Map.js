@@ -19,10 +19,10 @@ const Map = () => {
     const overlay = {
         referenceId: 'graphicsOverlay',
         points: [{
-            latitude: 34.00531212532058,//34.00091489824838
-            longitude: -118.80930002749008,//-118.8068756989962
+            latitude: 34.00531212532058,
+            longitude: -118.80930002749008,
             rotation: 0,
-            referenceId: 'Birdview Ave',//Point Dume
+            referenceId: 'Birdview Ave',
             graphicId: 'normalPoint',
         }, {
             latitude: 42.361145,
@@ -39,6 +39,7 @@ const Map = () => {
             graphic: Image.resolveAssetSource(require('../image/personpoint.png')),
         }]
     };
+    console.log('overlay', overlay);
     const addOverlay = {
         overlayReferenceId: 'graphicsOverlay',
         points: [{

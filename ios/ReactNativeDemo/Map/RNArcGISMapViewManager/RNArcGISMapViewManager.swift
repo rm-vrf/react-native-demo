@@ -82,6 +82,14 @@ public class RNArcGISMapViewManager: RCTViewManager {
             component.updatePointsInGraphicsOverlay(args)
         }
     }
+  
+    @objc func addGeodatabaseViaManager(_ args: NSDictionary) {
+        DispatchQueue.main.async {
+            //let component = self.bridge.uiManager.view(forReactTag: node) as! RNArcGISMapView
+            let component = self.agsMapView!
+            component.addGeodatabase(args)
+        }
+    }
     
     @objc func routeGraphicsOverlayViaManager(_ node: NSNumber, args: NSDictionary) {
         DispatchQueue.main.async {

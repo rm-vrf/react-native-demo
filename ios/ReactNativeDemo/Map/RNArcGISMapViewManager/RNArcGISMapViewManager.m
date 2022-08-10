@@ -24,6 +24,7 @@ RCT_EXPORT_VIEW_PROPERTY(onOverlayWasModified, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onOverlayWasAdded, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onOverlayWasRemoved, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onMapMoved, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onGeodatabaseWasAdded, RCTDirectEventBlock)
 
 
 // MARK: External method exports (these can be called from react via a reference)
@@ -39,6 +40,7 @@ RCT_EXTERN_METHOD(routeIsShowing:(nonnull NSNumber*) node callback: (RCTResponse
 RCT_EXTERN_METHOD(setRouteIsVisibleViaManager:(nonnull NSNumber*) node args:(BOOL*) args)
 RCT_EXTERN_METHOD(getRouteIsVisibleViaManager:(nonnull NSNumber*) node args:(BOOL*) args)
 RCT_EXTERN_METHOD(setLicenseKey:(nonnull NSString*)key)
+RCT_EXTERN_METHOD(addGeodatabaseViaManager:(NSDictionary*)args)
 
 RCT_EXTERN_METHOD(dispose/*:(nonnull NSNumber*) node*/)
 @end

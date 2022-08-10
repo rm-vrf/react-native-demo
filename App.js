@@ -19,6 +19,7 @@ import RemoteNotification from './components/RemoteNotification';
 import NativePackage from "./components/NativePackage";
 import messaging from '@react-native-firebase/messaging';
 import Map from "./components/Map";
+import MapOffline from "./components/MapOffline";
 
 const Stack = createNativeStackNavigator();
 const navigationRef = React.createRef();
@@ -103,6 +104,7 @@ const App = ({ isHeadless }) => {
         <Stack.Screen name="RemoteNotification" component={RemoteNotification} initialParams={{ fcmToken: fcmToken }} />
         <Stack.Screen name="NativePackage" component={NativePackage} />
         <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen name="MapOffline" component={MapOffline} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -129,6 +131,7 @@ const HomeScreen = ({ navigation }) => {
       <Button title="Remote notification" onPress={() => navigation.navigate('RemoteNotification', {})} />
       <Button title="Native package" onPress={() => navigation.navigate('NativePackage', {})} />
       <Button title="Map" onPress={() => navigation.navigate('Map', {})} />
+      <Button title="Map (offline)" onPress={() => navigation.navigate('MapOffline', {})} />
     </>
   );
 };

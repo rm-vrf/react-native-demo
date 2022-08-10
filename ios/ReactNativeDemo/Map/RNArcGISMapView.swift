@@ -28,7 +28,7 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
     
     func setUpMap() {
         // Default is to Esri HQ
-        self.map = AGSMap(basemapType: .streetsVector, latitude: 34.057, longitude: -117.196, levelOfDetail: 17)
+      self.map = AGSMap(basemap: .streets())
         self.map?.load(completion: {[weak self] (error) in
             if (self?.onMapDidLoad != nil){
                 var reactResult: [AnyHashable: Any] = ["success" : error == nil]
@@ -80,7 +80,7 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
         }
     }
 
-    @objc public func geoView(_ geoView: AGSGeoView, didTouchDragToScreenPoint screenPoint: CGPoint, mapPoint mapPoint: AGSPoint) {
+    @objc public func geoView(_ geoView: AGSGeoView, didTouchDragToScreenPoint screenPoint: CGPoint, mapPoint: AGSPoint) {
         if let onMapMoved = onMapMoved {
             let reactResult: [AnyHashable: Any] = [
                 "mapPoint" : ["latitude" : mapPoint.y, "longitude": mapPoint.x],
@@ -97,6 +97,7 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
     @objc var onOverlayWasAdded: RCTDirectEventBlock?
     @objc var onOverlayWasRemoved: RCTDirectEventBlock?
     @objc var onMapMoved: RCTDirectEventBlock?
+    @objc var onGeodatabaseWasAdded: RCTDirectEventBlock?
     
     // MARK: Exposed RN methods
     @objc func showCallout(_ args: NSDictionary) {
@@ -217,6 +218,69 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
         }
         reportToOverlayDidLoadListener(referenceId: args["overlayReferenceId"] as! NSString, action: "update", success: true, errorMessage: nil)
     }
+  
+  @objc func addGeodatabase(_ args: NSDictionary) {
+    guard let referenceId = args["referenceId"] as? NSString else {
+      print("WARNING: Invalid referenceId entered. No geodatabase will be added.")
+      return
+    }
+    
+    guard let s = args["geodatabaseURL"] as? NSString, let geodatabaseURL = URL(string: s as String) else {
+      print("WARNING: Invalid geodatabaseURL entered. No geodatabase will be added.")
+      return
+    }
+    
+    //print(geodatabaseURL)
+    let geodatabase = AGSGeodatabase(fileURL: geodatabaseURL)
+    geodatabase.load() { [weak self] (error) in
+      let result: Result<Void, Error>
+      if let error = error {
+        result = .failure(error)
+      } else {
+        result = .success(())
+      }
+      self?.geodatabaseDidLoad(geodatabase, with: result)
+    }
+    
+    if (onGeodatabaseWasAdded != nil) {
+      onGeodatabaseWasAdded!([NSString(string: "referenceId"): referenceId]);
+    }
+  }
+  
+  private func geodatabaseDidLoad(_ geodatabase: AGSGeodatabase, with result: Result<Void, Error>) {
+    switch result {
+    case .success:
+      for featureTable in geodatabase.geodatabaseFeatureTables {
+        print("feature table: \(featureTable.tableName)")
+        featureTable.load { [weak self] error in
+          guard let self = self else { return }
+          if let error = error {
+            print("WARNING: Invalid geodatabase feature layer. \(error)")
+          } else {
+            let featureLayer = AGSFeatureLayer(featureTable: featureTable)
+            self.map?.operationalLayers.add(featureLayer)
+            let extent = featureLayer.fullExtent
+            self.setViewpoint(AGSViewpoint(targetExtent: extent!))
+          }
+        }
+      }
+      
+      for annotationTable in geodatabase.geodatabaseAnnotationTables {
+        print("annotation table: \(annotationTable.tableName)")
+        annotationTable.load { [weak self] error in
+          guard let self = self else { return }
+          if let error = error {
+            print("WARNINT: Invalid geodatabase annotation layer. \(error)")
+          } else {
+            let annotationLayer = AGSAnnotationLayer(featureTable: annotationTable)
+            self.map?.operationalLayers.add(annotationLayer)
+          }
+        }
+      }
+    case .failure(let error):
+      print("WARNING: Invalid geodatabase data. \(error)")
+    }
+  }
     
     @objc func removeGraphicsOverlay(_ name: NSString) {
         guard let overlay = getOverlay(named: name) else {
@@ -280,7 +344,7 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
             if (self.map == nil) {
                 setUpMap()
             }
-            if let url = URL(string: basemapUrlString), let basemap = AGSBasemap(url: url){
+            if let url = URL(string: basemapUrlString), let basemap = createBasemap(url: url) {
                 basemap.load { [weak self] (error) in
                     if let error = error {
                         print(error.localizedDescription)
@@ -293,6 +357,15 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
             }
         }
     }
+  
+  private func createBasemap(url: URL) -> AGSBasemap? {
+    if url.path.lowercased().hasSuffix(".vtpk") {
+      let vectorTiledLayer = AGSArcGISVectorTiledLayer(url: url)
+      return AGSBasemap(baseLayer: vectorTiledLayer)
+    } else {
+      return AGSBasemap(url: url)
+    }
+  }
     
     @objc var recenterIfGraphicTapped: Bool = false
     
