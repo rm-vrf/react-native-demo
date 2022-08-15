@@ -8,10 +8,10 @@ const MapOffline = () => {
     const key = 'AAPKc85619ab61144011b89e94bd99e0a55cJXjNQG8TIn_54f2fp1azph9IB-PXQPCkJorOQirjGhb5wt7D6EreTHFLPkyIestQ';
     const basemapURL = 'https://www.arcgis.com/sharing/rest/content/items/b5106355f1634b8996e634c04b6a930a/data';
     const basemapName = 'FillmoreTopographicMap.vtpk';
-    const gdbURL = 'https://www.arcgis.com/sharing/rest/content/items/e12b54ea799f4606a2712157cf9f6e41/data';
-    const gdbName = 'ContingentValuesBirdNests.geodatabase';
-//    const gdbURL = 'https://www.arcgis.com/sharing/rest/content/items/74c0c9fa80f4498c9739cc42531e9948/data';
-//    const gdbName = 'loudoun_anno.geodatabase';
+//    const gdbURL = 'https://www.arcgis.com/sharing/rest/content/items/e12b54ea799f4606a2712157cf9f6e41/data';
+//    const gdbName = 'ContingentValuesBirdNests.geodatabase';
+    const gdbURL = 'https://www.arcgis.com/sharing/rest/content/items/74c0c9fa80f4498c9739cc42531e9948/data';
+    const gdbName = 'loudoun_anno.geodatabase';
     const { config, fs } = RNFetchBlob;
     const documentDir = fs.dirs.DocumentDir;
     const [ message, setMessage ] = useState('N/A'); 
@@ -27,25 +27,40 @@ const MapOffline = () => {
         }
     };
     const center = {
-        latitude: 34.38941562189429,
-        longitude: -118.90099973080952,
-//        latitude: 39.02021585807587,
-//        longitude: -77.41744847727631,
+//        latitude: 34.38941562189429,
+//        longitude: -118.90099973080952,
+        latitude: 39.02021585807587,
+        longitude: -77.41744847727631,
         scale: 9027.977411,
     };
     const addGeodatabaseArg = {
         referenceId: gdbName,
         geodatabaseURL: 'file://' + documentDir + '/' + gdbName,
         featureLayers: [{
-            referenceId: 'BirdNests',
-            tableName: 'BirdNests',
-            definitionExpression: 'BufferSize > 0',
-            extent: 'fullExtent',
+            referenceId: 'ParcelLines_1',
+            tableName: 'ParcelLines_1',
+            definitionExpression: 'Length > 0',
         }],
-        // annotationLayers: [{
-        //     referenceId: 'BirdNestsAnno_1',
-        //     tableName: 'BirdNestsAnno',
-        // }],
+        annotationLayers: [{
+            referenceId: 'ParcelLinesAnno_1',
+            tableName: 'ParcelLinesAnno_1',
+        }],
+    };
+    const addLayersToGeodatabaseArg = {
+        geodatabaseReferenceId: gdbName, 
+        featureLayers: [{
+            referenceId: 'Loudoun_Address_Points_1',
+            tableName: 'Loudoun_Address_Points_1',
+        }], 
+        annotationLayers: [{
+            referenceId: 'Loudoun_Address_PointsAnno_1',
+            tableName: 'Loudoun_Address_PointsAnno_1',
+        }]
+    };
+    const removeLayersFromGeodatabaseArg = {
+        geodatabaseReferenceId: gdbName, 
+        featureLayerReferenceIds: ['Loudoun_Address_Points_1'],
+        annotationLayerReferenceIds: ['Loudoun_Address_PointsAnno_1'],
     };
 
     setLicenseKey(key);
@@ -126,9 +141,21 @@ const MapOffline = () => {
                 }}
             />
             <Button 
-                title='Hide geodatabase'
+                title='Add geodatabase layer'
                 onPress={() => {
-                    console.log('hide');
+                    agsView.addLayersToGeodatabase(addLayersToGeodatabaseArg);
+                }}
+            />
+            <Button 
+                title='Remove geodatabase layer'
+                onPress={() => {
+                    agsView.removeLayersFromGeodatabase(removeLayersFromGeodatabaseArg);
+                }}
+            />
+            <Button 
+                title='Remove geodatabase'
+                onPress={() => {
+                    agsView.removeGeodatabase(gdbName);
                 }}
             />
             <ArcGISMapView
@@ -141,6 +168,8 @@ const MapOffline = () => {
                 onSingleTap={e => { callout(e.nativeEvent) }} 
                 onMapMoved={e => { console.log('onMapMoved', e.nativeEvent) }} 
                 onGeodatabaseWasAdded = {e => { console.log('onGeodatabaseWasAdded', e.nativeEvent) }}
+                onGeodatabaseWasModified = {e => { console.log('onGeodatabaseWasModified', e.nativeEvent) }}
+                onGeodatabaseWasRemoved = {e => { console.log('onGeodatabaseWasRemoved', e.nativeEvent) }}
             />
         </>
     );

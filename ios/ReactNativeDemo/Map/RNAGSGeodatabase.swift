@@ -28,8 +28,15 @@ public class RNAGSGeodatabase {
     }
     geodatabaseURL = geodatabaseURLRaw
     
-    // Read feature layer data
+    // Read feature layer data & annotation layer data
     featureDictionaries = []
+    annotationDictionaries = []
+    update(rawData: rawData)
+  }
+  
+  func update(rawData: NSDictionary) {
+    // Read feature layer data
+    featureDictionaries.removeAll()
     if let rawDataFeatureLayers = rawData["featureLayers"] as? [NSDictionary] {
       for rawDataFeatureLayer in rawDataFeatureLayers {
         featureDictionaries.append(LayerDictionary(rawData: rawDataFeatureLayer))
@@ -37,7 +44,7 @@ public class RNAGSGeodatabase {
     }
     
     // Read annotation layer data
-    annotationDictionaries = []
+    annotationDictionaries.removeAll()
     if let rawDataAnnotationLayers = rawData["annotationLayers"] as? [NSDictionary] {
       for rawDataAnnotationLayer in rawDataAnnotationLayers {
         annotationDictionaries.append(LayerDictionary(rawData: rawDataAnnotationLayer))

@@ -74,6 +74,27 @@ public class RNArcGISMapViewManager: RCTViewManager {
             component.removeGraphicsOverlay(args)
         }
     }
+  
+    @objc func addLayersToGeodatabaseViaManager(_ args: NSDictionary) {
+        DispatchQueue.main.async {
+            let component = self.agsMapView!
+            component.addLayersToGeodatabase(args)
+        }
+    }
+  
+    @objc func removeLayersFromGeodatabaseViaManager(_ args: NSDictionary) {
+        DispatchQueue.main.async {
+            let component = self.agsMapView!
+            component.removeLayersFromGeodatabase(args)
+        }
+    }
+  
+    @objc func removeGeodatabaseViaManager(_ args: NSString) {
+        DispatchQueue.main.async {
+            let component = self.agsMapView!
+            component.removeGeodatabase(args)
+        }
+    }
     
     @objc func updatePointsInGraphicsOverlayViaManager(/*_ node: NSNumber, */_ args: NSDictionary) {
         DispatchQueue.main.async {

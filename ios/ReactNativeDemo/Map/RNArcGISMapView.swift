@@ -13,6 +13,7 @@ import ArcGIS
 public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
     // MARK: Properties
     var routeGraphicsOverlay = AGSGraphicsOverlay()
+    var geodatabases: [NSString: RNAGSGeodatabase] = [:]
     var router: RNAGSRouter?
     var bridge: RCTBridge?
     
@@ -127,6 +128,8 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
     @objc var onOverlayWasRemoved: RCTDirectEventBlock?
     @objc var onMapMoved: RCTDirectEventBlock?
     @objc var onGeodatabaseWasAdded: RCTDirectEventBlock?
+    @objc var onGeodatabaseWasModified: RCTDirectEventBlock?
+    @objc var onGeodatabaseWasRemoved: RCTDirectEventBlock?
     
     // MARK: Exposed RN methods
     @objc func showCallout(_ args: NSDictionary) {
@@ -250,6 +253,7 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
   
     @objc func addGeodatabase(_ args: NSDictionary) {
         let geodatabase = RNAGSGeodatabase(rawData: args);
+        geodatabases[geodatabase.referenceId] = geodatabase
         geodatabase.geodatabaseDidLoad() {featureLayers, annotationLayers in
             var featureLayerIds:[NSString] = []
             if let featureLayers = featureLayers {
@@ -279,6 +283,82 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
         if (onOverlayWasRemoved != nil) {
             onOverlayWasRemoved!([NSString(string: "referenceId"): name])
         }
+    }
+  
+    @objc func addLayersToGeodatabase(_ args: NSDictionary) {
+        guard let name = args["geodatabaseReferenceId"] as? NSString,  let geodatabase = geodatabases[name] else {
+            print("WARNING: Invalid geodatabase name entered. No layers will be added.")
+            reportToLayerDidLoadListener(referenceId: args["geodatabaseReferenceId"] as? NSString ?? NSString(string:"unknown"), action: "add", success: false, errorMessage: "Invalid layer name entered.", featureLayers: nil, annotationLayers: nil)
+            return
+        }
+
+        geodatabase.update(rawData: args)
+        geodatabase.geodatabaseDidLoad() {featureLayers, annotationLayers in
+            guard let operationalLayers = self.map?.operationalLayers else {
+                return
+            }
+
+            var featureLayerIds:[NSString] = []
+            if let featureLayers = featureLayers {
+                for featureLayer in featureLayers {
+                    if !operationalLayers.contains(featureLayer) {
+                        operationalLayers.add(featureLayer)
+                        featureLayerIds.append(featureLayer.referenceId)
+                    }
+                }
+            }
+      
+            var annotationLayerIds: [NSString] = []
+            if let annotationLayers = annotationLayers {
+                for annotationLayer in annotationLayers {
+                    if !operationalLayers.contains(annotationLayer) {
+                        operationalLayers.add(annotationLayer)
+                        annotationLayerIds.append(annotationLayer.referenceId)
+                    }
+                }
+            }
+      
+            self.reportToLayerDidLoadListener(referenceId: name, action: "add", success: true, errorMessage: nil, featureLayers: featureLayerIds, annotationLayers: annotationLayerIds)
+        }
+    }
+  
+    @objc func removeLayersFromGeodatabase(_ args: NSDictionary) {
+        guard let name = args["geodatabaseReferenceId"] as? NSString, let _ = geodatabases[name] else {
+            print("WARNING: Invalid geodatabase name entered. No layers will be modified.")
+            reportToLayerDidLoadListener(referenceId: args["geodatabaseReferenceId"] as? NSString ?? NSString(string: "Unknown"), action: "remove", success: false, errorMessage: "Invalid geodatabase name entered.", featureLayers: nil, annotationLayers: nil)
+            return
+        }
+        var featureLayerIds = args["featureLayerReferenceIds"] as? [NSString]
+        var annotationLayerIds = args["annotationLayerReferenceIds"] as? [NSString]
+        let layers = self.getOprationalLayers(byGeodatabaeId: name, byFeatureLayerIds: featureLayerIds, byAnnotationLayerIds: annotationLayerIds)
+
+        featureLayerIds?.removeAll()
+        annotationLayerIds?.removeAll()
+        guard let operationalLayers = self.map?.operationalLayers else {
+            return
+        }
+
+        for layer in layers {
+            if layer is RNAGSFeatureLayer && operationalLayers.contains(layer) {
+                operationalLayers.remove(layer)
+                featureLayerIds?.append((layer as! RNAGSFeatureLayer).referenceId)
+            } else if layer is RNAGSAnnotationLayer && operationalLayers.contains(layer) {
+                operationalLayers.remove(layer)
+                annotationLayerIds?.append((layer as! RNAGSAnnotationLayer).referenceId)
+            }
+        }
+        reportToLayerDidLoadListener(referenceId: name, action: "remove", success: true, errorMessage: nil, featureLayers: featureLayerIds, annotationLayers: annotationLayerIds)
+    }
+  
+    @objc func removeGeodatabase(_ name: NSString) {
+        let layers = getOprationalLayers(byGeodatabaeId: name)
+        for layer in layers {
+            self.map?.operationalLayers.remove(layer)
+        }
+        if (onGeodatabaseWasRemoved != nil) {
+            onGeodatabaseWasRemoved!([NSString(string: "referenceId"): name])
+        }
+        geodatabases.removeValue(forKey: name)
     }
     
     @objc func routeGraphicsOverlay(_ args: NSDictionary) {
@@ -346,14 +426,14 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
         }
     }
   
-  private func createBasemap(url: URL) -> AGSBasemap? {
-    if url.path.lowercased().hasSuffix(".vtpk") {
-      let vectorTiledLayer = AGSArcGISVectorTiledLayer(url: url)
-      return AGSBasemap(baseLayer: vectorTiledLayer)
-    } else {
-      return AGSBasemap(url: url)
+    private func createBasemap(url: URL) -> AGSBasemap? {
+        if url.path.lowercased().hasSuffix(".vtpk") {
+            let vectorTiledLayer = AGSArcGISVectorTiledLayer(url: url)
+            return AGSBasemap(baseLayer: vectorTiledLayer)
+        } else {
+            return AGSBasemap(url: url)
+        }
     }
-  }
     
     @objc var recenterIfGraphicTapped: Bool = false
     
@@ -426,7 +506,39 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
             return nil
         }
     }
-    
+  
+    private func getOprationalLayers(byGeodatabaeId geodatabaseId: NSString?) -> [AGSLayer] {
+        var layers: [AGSLayer] = []
+        if let geodatabaseId = geodatabaseId {
+            self.map?.operationalLayers.forEach({
+                if $0 is RNAGSFeatureLayer && ($0 as! RNAGSFeatureLayer).geodatabaseReferenceId == geodatabaseId {
+                    layers.append($0 as! AGSLayer)
+                } else if $0 is RNAGSAnnotationLayer && ($0 as! RNAGSAnnotationLayer).geodatabaseReferenceId == geodatabaseId {
+                    layers.append($0 as! AGSLayer)
+                }
+            })
+        }
+        return layers
+    }
+  
+    private func getOprationalLayers(byGeodatabaeId geodatabaseId: NSString?, byFeatureLayerIds featureLayerIds: [NSString]?, byAnnotationLayerIds annotationLayerIds: [NSString]?) -> [AGSLayer] {
+        var layers: [AGSLayer] = []
+        if let geodatabaseId = geodatabaseId {
+            self.map?.operationalLayers.forEach({
+                if $0 is RNAGSFeatureLayer && ($0 as! RNAGSFeatureLayer).geodatabaseReferenceId == geodatabaseId {
+                    if let featureLayerIds = featureLayerIds, featureLayerIds.contains(($0 as! RNAGSFeatureLayer).referenceId) {
+                        layers.append($0 as! AGSLayer)
+                    }
+                } else if $0 is RNAGSAnnotationLayer && ($0 as! RNAGSAnnotationLayer).geodatabaseReferenceId == geodatabaseId {
+                    if let annotationLayerIds = annotationLayerIds, annotationLayerIds.contains(($0 as! RNAGSAnnotationLayer).referenceId) {
+                        layers.append($0 as! AGSLayer)
+                    }
+                }
+            })
+        }
+        return layers
+    }
+  
     func reportToOverlayDidLoadListener(referenceId: NSString, action: NSString, success: Bool, errorMessage: NSString?){
         if (onOverlayWasModified != nil) {
             var reactResult: [AnyHashable: Any] = [
@@ -436,6 +548,23 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
                 reactResult["errorMessage"] = errorMessage
             }
             onOverlayWasModified!(reactResult)
+        }
+    }
+    func reportToLayerDidLoadListener(referenceId: NSString, action: NSString, success: Bool, errorMessage: NSString?, featureLayers: [NSString]?, annotationLayers: [NSString]?){
+        if (onGeodatabaseWasModified != nil) {
+            var reactResult: [AnyHashable: Any] = [
+                "referenceId" : referenceId, "action": action, "success": success
+            ]
+            if let errorMessage = errorMessage {
+                reactResult["errorMessage"] = errorMessage
+            }
+            if let featureLayers = featureLayers {
+                reactResult["featureLayers"] = featureLayers
+            }
+            if let annotationLayers = annotationLayers {
+                reactResult["annotationLayers"] = annotationLayers
+            }
+            onGeodatabaseWasModified!(reactResult)
         }
     }
     private func getOverlay(named name: NSString) -> RNAGSGraphicsOverlay?{

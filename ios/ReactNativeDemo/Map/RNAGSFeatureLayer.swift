@@ -11,7 +11,6 @@ import Foundation
 public class RNAGSFeatureLayer : AGSFeatureLayer {
   let geodatabaseReferenceId: NSString
   let referenceId: NSString
-  let extent: String
   
   init(geodatabase: RNAGSGeodatabase, featureTable: AGSGeodatabaseFeatureTable, rawData: NSDictionary?) {
     geodatabaseReferenceId = geodatabase.referenceId
@@ -22,12 +21,6 @@ public class RNAGSFeatureLayer : AGSFeatureLayer {
       referenceId = NSString(string: featureTable.tableName)
     }
     
-    if let extentRaw = rawData?["extent"] as? NSString {
-      extent = String(extentRaw)
-    } else {
-      extent = ""
-    }
-
     super.init(featureTable: featureTable)
     
     if let definitionExpressionRaw = rawData?["definitionExpression"] as? NSString {
