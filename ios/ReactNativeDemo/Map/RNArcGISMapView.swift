@@ -51,31 +51,60 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
                 "mapPoint": ["latitude" : latLongPoint.y, "longitude": latLongPoint.x],
                 "screenPoint" : ["x": screenPoint.x, "y": screenPoint.y]
             ]
-            self.identifyGraphicsOverlays(atScreenPoint: screenPoint, tolerance: 15, returnPopupsOnly: false) { [weak self] (result, error) in
-                if let error = error {
-                    reactResult["success"] = false
-                    reactResult["errorMessage"] = error.localizedDescription
-                } else {
-                    reactResult["success"] = true
+          
+            // Geodatabase feature layer & annotation layer
+            var layers: [AGSLayer] = []
+            if let operationalLayers = self.map?.operationalLayers as? [AGSLayer] {
+                layers.append(contentsOf: operationalLayers)
+            }
+          
+            if !layers.isEmpty {
+                // Identity feature layer & annotation layer
+                for layer in layers {
+                    self.identifyLayer(layer, screenPoint: screenPoint, tolerance: 15, returnPopupsOnly: false, maximumResults: 10) {[weak self] (result) in
+                        if let error = result.error {
+                            reactResult["success"] = false
+                            reactResult["errorMessage"] = error.localizedDescription
+                        } else {
+                            reactResult["success"] = true
+                        }
+                        guard !result.geoElements.isEmpty else {
+                            self?.onSingleTap!(reactResult)
+                            return
+                        }
+                        for element in result.geoElements {
+                            //print("\(item.attributes)")
+                            reactResult["geoElementAttributes"] = element.attributes
+                            if self?.recenterIfGraphicTapped ?? false {
+                                self?.setViewpointCenter(mapPoint, completion: nil)
+                            }
+                        }
+                        self?.onSingleTap!(reactResult)
+                    }
                 }
-                guard let result = result, !result.isEmpty else {
-                    self?.onSingleTap!(reactResult)
-                    return
-                }
-                for item in result {
-                    //if item.graphicsOverlay is RNAGSGraphicsOverlay, let closestGraphic = item.graphics.first, let referenceId = closestGraphic.attributes["referenceId"] as? NSString{
-                        let closestGraphic = item.graphics.first
-                        let attributes = closestGraphic?.attributes
-                        reactResult["graphicAttributes"] = attributes
-                        if let referenceId = attributes?["referenceId"] as? NSString {
+            } else {
+                // Identity graphics overlay
+                self.identifyGraphicsOverlays(atScreenPoint: screenPoint, tolerance: 15, returnPopupsOnly: false) { [weak self] (result, error) in
+                    if let error = error {
+                        reactResult["success"] = false
+                        reactResult["errorMessage"] = error.localizedDescription
+                    } else {
+                        reactResult["success"] = true
+                    }
+                    guard let result = result, !result.isEmpty else {
+                        self?.onSingleTap!(reactResult)
+                        return
+                    }
+                    for item in result {
+                        if item.graphicsOverlay is RNAGSGraphicsOverlay, let closestGraphic = item.graphics.first, let referenceId = closestGraphic.attributes["referenceId"] as? NSString{
                             reactResult["graphicReferenceId"] = referenceId
+                            if self?.recenterIfGraphicTapped ?? false {
+                                self?.setViewpointCenter(mapPoint, completion: nil)
+                            }
                         }
-                        if self?.recenterIfGraphicTapped ?? false {
-                            self?.setViewpointCenter(mapPoint, completion: nil)
-                        }
-                    //}
+                    }
+                    self?.onSingleTap!(reactResult)
                 }
-                self?.onSingleTap!(reactResult)
             }
         }
     }
@@ -219,69 +248,28 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
         reportToOverlayDidLoadListener(referenceId: args["overlayReferenceId"] as! NSString, action: "update", success: true, errorMessage: nil)
     }
   
-  @objc func addGeodatabase(_ args: NSDictionary) {
-    guard let referenceId = args["referenceId"] as? NSString else {
-      print("WARNING: Invalid referenceId entered. No geodatabase will be added.")
-      return
-    }
-    
-    guard let s = args["geodatabaseURL"] as? NSString, let geodatabaseURL = URL(string: s as String) else {
-      print("WARNING: Invalid geodatabaseURL entered. No geodatabase will be added.")
-      return
-    }
-    
-    //print(geodatabaseURL)
-    let geodatabase = AGSGeodatabase(fileURL: geodatabaseURL)
-    geodatabase.load() { [weak self] (error) in
-      let result: Result<Void, Error>
-      if let error = error {
-        result = .failure(error)
-      } else {
-        result = .success(())
-      }
-      self?.geodatabaseDidLoad(geodatabase, with: result)
-    }
-    
-    if (onGeodatabaseWasAdded != nil) {
-      onGeodatabaseWasAdded!([NSString(string: "referenceId"): referenceId]);
-    }
-  }
-  
-  private func geodatabaseDidLoad(_ geodatabase: AGSGeodatabase, with result: Result<Void, Error>) {
-    switch result {
-    case .success:
-      for featureTable in geodatabase.geodatabaseFeatureTables {
-        print("feature table: \(featureTable.tableName)")
-        featureTable.load { [weak self] error in
-          guard let self = self else { return }
-          if let error = error {
-            print("WARNING: Invalid geodatabase feature layer. \(error)")
-          } else {
-            let featureLayer = AGSFeatureLayer(featureTable: featureTable)
-            self.map?.operationalLayers.add(featureLayer)
-            let extent = featureLayer.fullExtent
-            self.setViewpoint(AGSViewpoint(targetExtent: extent!))
-          }
-        }
-      }
+    @objc func addGeodatabase(_ args: NSDictionary) {
+        let geodatabase = RNAGSGeodatabase(rawData: args);
+        geodatabase.geodatabaseDidLoad() {featureLayers, annotationLayers in
+            var featureLayerIds:[NSString] = []
+            if let featureLayers = featureLayers {
+                self.map?.operationalLayers.addObjects(from: featureLayers)
+                featureLayerIds.append(contentsOf: featureLayers.map({$0.referenceId}))
+            }
+
+            var annotationLayerIds: [NSString] = []
+            if let annotationLayers = annotationLayers {
+                self.map?.operationalLayers.addObjects(from: annotationLayers)
+                annotationLayerIds.append(contentsOf: annotationLayers.map({$0.referenceId}))
+            }
       
-      for annotationTable in geodatabase.geodatabaseAnnotationTables {
-        print("annotation table: \(annotationTable.tableName)")
-        annotationTable.load { [weak self] error in
-          guard let self = self else { return }
-          if let error = error {
-            print("WARNINT: Invalid geodatabase annotation layer. \(error)")
-          } else {
-            let annotationLayer = AGSAnnotationLayer(featureTable: annotationTable)
-            self.map?.operationalLayers.add(annotationLayer)
-          }
+            if (self.onGeodatabaseWasAdded != nil) {
+                let arg = [NSString(string: "referenceId"): geodatabase.referenceId, NSString(string: "featureLayers"): featureLayerIds, NSString(string: "annotationLayers"): annotationLayerIds] as [NSString : Any]
+                self.onGeodatabaseWasAdded!(arg);
+            }
         }
-      }
-    case .failure(let error):
-      print("WARNING: Invalid geodatabase data. \(error)")
     }
-  }
-    
+  
     @objc func removeGraphicsOverlay(_ name: NSString) {
         guard let overlay = getOverlay(named: name) else {
             print("WARNING: Invalid layer name entered. No overlay will be removed.")

@@ -29,7 +29,23 @@ const MapOffline = () => {
     const center = {
         latitude: 34.38941562189429,
         longitude: -118.90099973080952,
+//        latitude: 39.02021585807587,
+//        longitude: -77.41744847727631,
         scale: 9027.977411,
+    };
+    const addGeodatabaseArg = {
+        referenceId: gdbName,
+        geodatabaseURL: 'file://' + documentDir + '/' + gdbName,
+        featureLayers: [{
+            referenceId: 'BirdNests',
+            tableName: 'BirdNests',
+            definitionExpression: 'BufferSize > 0',
+            extent: 'fullExtent',
+        }],
+        // annotationLayers: [{
+        //     referenceId: 'BirdNestsAnno_1',
+        //     tableName: 'BirdNestsAnno',
+        // }],
     };
 
     setLicenseKey(key);
@@ -66,6 +82,20 @@ const MapOffline = () => {
         });
     };
 
+    const callout = (e) => {
+        console.log('onSingleTap', e);
+        let arg = {
+            title: 'Geo Element',
+            text: JSON.stringify(e.geoElementAttributes),
+            shouldRecenter: false,
+            point: {
+                latitude: e.mapPoint.latitude,
+                longitude: e.mapPoint.longitude
+            }
+        };
+        agsView.showCallout(arg);
+    };
+
     return (
         <>
             <Text>{message}</Text>
@@ -77,7 +107,7 @@ const MapOffline = () => {
                 }}
             />
             <Button 
-                title='Change basemap'
+                title='Load offline map'
                 onPress={() => {
                     setBasemap('file://' + documentDir + '/' + basemapName);
                 }}
@@ -92,10 +122,7 @@ const MapOffline = () => {
             <Button 
                 title='Show geodatabase'
                 onPress={() => {
-                    agsView.addGeodatabase({
-                        referenceId: gdbName,
-                        geodatabaseURL: 'file://' + documentDir + '/' + gdbName,
-                    });
+                    agsView.addGeodatabase(addGeodatabaseArg);
                 }}
             />
             <Button 
@@ -109,8 +136,9 @@ const MapOffline = () => {
                 ref={element => agsView = element}
                 basemapUrl={basemap}
                 initialMapCenter={[center]}
+                recenterIfGraphicTapped={false}
                 onMapDidLoad={e => { console.log('onMapDidLoad', e.nativeEvent) }} 
-                onSingleTap={e => { console.log('onSingleTap', e.nativeEvent) }} 
+                onSingleTap={e => { callout(e.nativeEvent) }} 
                 onMapMoved={e => { console.log('onMapMoved', e.nativeEvent) }} 
                 onGeodatabaseWasAdded = {e => { console.log('onGeodatabaseWasAdded', e.nativeEvent) }}
             />
