@@ -29,7 +29,7 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
     
     func setUpMap() {
         // Default is to Esri HQ
-      self.map = AGSMap(basemap: .streets())
+        self.map = AGSMap(basemap: .streets())
         self.map?.load(completion: {[weak self] (error) in
             if (self?.onMapDidLoad != nil){
                 var reactResult: [AnyHashable: Any] = ["success" : error == nil]
@@ -417,7 +417,11 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
                     if let error = error {
                         print(error.localizedDescription)
                     } else {
-                        self?.map?.basemap = basemap
+                        //self?.map?.basemap = basemap
+                        self?.map = AGSMap(basemap: basemap)
+                        if let center = self?.mapCenter {
+                            self?.centerMap(center)
+                        }
                     }
                 }
             } else {
@@ -444,9 +448,11 @@ public class RNArcGISMapView: AGSMapView, AGSGeoViewTouchDelegate {
             }
         }
     }
-    
+
+    private var mapCenter: NSArray?
     @objc var initialMapCenter: NSArray? {
         didSet{
+            self.mapCenter = initialMapCenter
             var points = [AGSPoint]()
             var scale: Double = 10000
             if let initialMapCenter = initialMapCenter as? [NSDictionary] {
