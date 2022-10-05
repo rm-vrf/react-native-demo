@@ -8,12 +8,12 @@ const Map = () => {
         {
             latitude: 34.0005930608889,
             longitude: -118.80657463861,
-            scale: 10000.0,
+            //scale: 10000.0,
         },
         {
             latitude: 42.361145,
             longitude: -71.057083,
-            scale: 9027.977411,
+            //scale: 9027.977411,
         },
     ];
     const overlay = {
@@ -76,6 +76,8 @@ const Map = () => {
     const ids = ['5be0bc3ee36c4e058f7b3cebc21c74e6', '92ad152b9da94dee89b9e387dfe21acd'];
     const [ center, setCenter ] = useState(points[0]);
     const [ basemap, setBasemap ] = useState('');
+    var zoomLevel = 2;
+    var scale = 10000000;
 
     let agsView = useRef(null);
     setLicenseKey(key);
@@ -85,15 +87,31 @@ const Map = () => {
             <Button 
                 title='Change map center' 
                 onPress={() => {
-                    const i = points[0].scale === center.scale ? 1 : 0;
+                    const i = points[0].latitude === center.latitude ? 1 : 0;
                     setCenter(points[i]);
                     agsView.recenterMap([center]);
                 }}>
             </Button>
             <Button 
+                title='Zoom map'
+                onPress={() => {
+                    zoomLevel = zoomLevel >= 20 ? 2 : zoomLevel + 2; 
+                    console.log("zoomLevel", zoomLevel);
+                    agsView.zoomMap(zoomLevel); 
+                }}
+            ></Button>
+            <Button 
+                title='Scale map'
+                onPress={() => {
+                    scale = scale <= 10000 ? 10000000 : scale / 2; 
+                    console.log("scale", scale);
+                    agsView.scaleMap(scale); 
+                }}
+            ></Button>
+            {/* <Button 
                 title='Change basemap' 
                 onPress={() => { setBasemap(basemap === ids[0] ? ids[1] : ids[0]); }}>
-            </Button>
+            </Button> */}
             <Button 
                 title='Add overlay'
                 onPress={() => { agsView.addGraphicsOverlay(overlay); }}>
@@ -116,20 +134,31 @@ const Map = () => {
             </Button>
             <Button 
                 title='Callout'
-                onPress={() => { agsView.showCallout(callout); }}>
+                //onPress={() => { agsView.showCallout(callout); }}>
+                onPress={() => { agsView.getVisibleAreaVia().then(result => {console.log(result)}) }}>
             </Button>
             <ArcGISMapView
                 style={styles.map} 
                 ref={element => agsView = element}
                 initialMapCenter={[center]}
                 recenterIfGraphicTapped={true}
-                basemapUrl={'https://www.arcgis.com/home/item.html?id=' + basemap}
+                //basemapUrl={'https://www.arcgis.com/home/item.html?id=' + basemap}
+                //basemapUrl={'https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer'}
+                //basemapUrl={'http://gis.cityofboston.gov/arcgis/rest/services/SampleWorldCities/MapServer'}//NG
+                //basemapUrl={'http://gis.cityofboston.gov/arcgis/rest/services/CityServices/OpenData/MapServer'}//NG
+                //basemapUrl={'https://gis.dogami.oregon.gov/arcgis/rest/services/Public/MtHoodCritFac/MapServer'}//NG
+                //basemapUrl={'https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer'}//ImageLayer
+                //basemapUrl={'https://sampleserver5.arcgisonline.com/arcgis/rest/services/Census/MapServer'}//ImageLayer
+                //basemapUrl={'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'}//TiledLayer
                 onMapDidLoad={e => { console.log('onMapDidLoad', e.nativeEvent) }} 
                 onSingleTap={e => { console.log('onSingleTap', e.nativeEvent) }} 
-                onMapMoved={e => { console.log('onMapMoved', e.nativeEvent) }} 
+                onLongPress={e => { console.log('onLongPress', e.nativeEvent) }}
+                //onMapMoved={e => { console.log('onMapMoved', e.nativeEvent) }} 
                 onOverlayWasAdded = {e => { console.log('onOverlayWasAdded', e.nativeEvent) }}
                 onOverlayWasModified = {e => { console.log('onOverlayWasModified', e.nativeEvent) }}
                 onOverlayWasRemoved = {e => { console.log('onOverlayWasRemoved', e.nativeEvent) }}
+                spatialReference = {{ wkid: 4326 }}
+                //spatialRef = {{ wkid: 4326 }}
             />
         </>
     );

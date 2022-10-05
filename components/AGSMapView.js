@@ -18,7 +18,15 @@ class ArcGISMapView extends React.Component {
     recenterMap = (pointArray) => {
         NativeModules.RNArcGISMapViewManager.centerMapViaManager(pointArray);
     }
+
+    scaleMap = (args) => {
+        NativeModules.RNArcGISMapViewManager.scaleMapViaManager(args);
+    }
     
+    zoomMap = (args) => {
+        NativeModules.RNArcGISMapViewManager.zoomMapViaManager(args);
+    }
+
     addGraphicsOverlay = (overlayData) => {
         NativeModules.RNArcGISMapViewManager.addGraphicsOverlayViaManager(overlayData);
     }
@@ -53,6 +61,14 @@ class ArcGISMapView extends React.Component {
 
     removeGeodatabase = (geodatabaseId) => {
         NativeModules.RNArcGISMapViewManager.removeGeodatabaseViaManager(geodatabaseId);
+    }
+
+    getVisibleAreaVia = () => {
+        return new Promise((resolve, reject) => {
+            NativeModules.RNArcGISMapViewManager.getVisibleAreaViaManager()
+                .then(result => resolve(result))
+                .catch(error => reject(error));
+        });
     }
 
     // MARK: Render
