@@ -56,6 +56,18 @@ const MapVectorTilePackage = () => {
                     setBasemap('file://' + documentDir + '/' + basemapName);
                 }}
             />
+            <Button 
+                title='Add Base Layer'
+                onPress={() => {
+                    agsView.addBaseLayer({referenceId: 'baseLayerId', url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'});
+                }}
+            />
+            <Button 
+                title='Remove Base Layer'
+                onPress={() => {
+                    agsView.removeBaseLayer('baseLayerId');
+                }}
+            />
             <ArcGISMapView
                 style={styles.map} 
                 ref={element => agsView = element}
@@ -63,6 +75,7 @@ const MapVectorTilePackage = () => {
                 recenterIfGraphicTapped={false}
                 onMapDidLoad={e => { console.log('onMapDidLoad', e.nativeEvent) }} 
                 onSingleTap={e => { console.log('onSingleTap', e.nativeEvent) }} 
+                onOverlayWasModified = {e => { console.log('onOverlayWasModified', e.nativeEvent) }}
             />
         </>
     );

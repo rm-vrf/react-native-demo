@@ -140,6 +140,7 @@ const Map = () => {
             <ArcGISMapView
                 style={styles.map} 
                 ref={element => agsView = element}
+                //zoomLevel = {8}
                 initialMapCenter={[center]}
                 recenterIfGraphicTapped={true}
                 //basemapUrl={'https://www.arcgis.com/home/item.html?id=' + basemap}
@@ -149,16 +150,21 @@ const Map = () => {
                 //basemapUrl={'https://gis.dogami.oregon.gov/arcgis/rest/services/Public/MtHoodCritFac/MapServer'}//NG
                 //basemapUrl={'https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer'}//ImageLayer
                 //basemapUrl={'https://sampleserver5.arcgisonline.com/arcgis/rest/services/Census/MapServer'}//ImageLayer
-                //basemapUrl={'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'}//TiledLayer
-                onMapDidLoad={e => { console.log('onMapDidLoad', e.nativeEvent) }} 
+                basemapUrl={'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'}//TiledLayer
+                onMapDidLoad = {e => {
+                    console.log('onMapDidLoad', e.nativeEvent); 
+                    setTimeout(function() {
+                        console.log('zoom map'); 
+                        agsView.zoomMap(9);
+                    }, 1000); 
+                }} 
                 onSingleTap={e => { console.log('onSingleTap', e.nativeEvent) }} 
                 onLongPress={e => { console.log('onLongPress', e.nativeEvent) }}
                 //onMapMoved={e => { console.log('onMapMoved', e.nativeEvent) }} 
                 onOverlayWasAdded = {e => { console.log('onOverlayWasAdded', e.nativeEvent) }}
                 onOverlayWasModified = {e => { console.log('onOverlayWasModified', e.nativeEvent) }}
                 onOverlayWasRemoved = {e => { console.log('onOverlayWasRemoved', e.nativeEvent) }}
-                spatialReference = {{ wkid: 4326 }}
-                //spatialRef = {{ wkid: 4326 }}
+                //spatialReference = {{ wkid: 4326 }}
             />
         </>
     );
