@@ -28,6 +28,26 @@
 		67467ADCD8F8FF02BDBA2FC2 /* libPods-ReactNativeDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA67184BD2CDCA5074039C8 /* libPods-ReactNativeDemo.a */; };
 		7C24FBE09C58F171C2CE875D /* libPods-ReactNativeDemo-ReactNativeDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCDEC0427E2A3985E3E26613 /* libPods-ReactNativeDemo-ReactNativeDemoTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		893734DC288D1AA8005824FF /* RNAGSRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734D6288D1AA8005824FF /* RNAGSRouter.swift */; };
+		893734DD288D1AA8005824FF /* RNAGSRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734D6288D1AA8005824FF /* RNAGSRouter.swift */; };
+		893734DE288D1AA8005824FF /* RNAGSGraphicsOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734D7288D1AA8005824FF /* RNAGSGraphicsOverlay.swift */; };
+		893734DF288D1AA8005824FF /* RNAGSGraphicsOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734D7288D1AA8005824FF /* RNAGSGraphicsOverlay.swift */; };
+		893734E0288D1AA8005824FF /* RNArcGISMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 893734D8288D1AA8005824FF /* RNArcGISMapViewManager.m */; };
+		893734E1288D1AA8005824FF /* RNArcGISMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 893734D8288D1AA8005824FF /* RNArcGISMapViewManager.m */; };
+		893734E2288D1AA8005824FF /* RNArcGISMapViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734D9288D1AA8005824FF /* RNArcGISMapViewManager.swift */; };
+		893734E3288D1AA8005824FF /* RNArcGISMapViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734D9288D1AA8005824FF /* RNArcGISMapViewManager.swift */; };
+		893734E4288D1AA8005824FF /* RNArcGISMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734DA288D1AA8005824FF /* RNArcGISMapView.swift */; };
+		893734E5288D1AA8005824FF /* RNArcGISMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734DA288D1AA8005824FF /* RNArcGISMapView.swift */; };
+		893734E6288D1AA8005824FF /* RNAGSUIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734DB288D1AA8005824FF /* RNAGSUIColorExtension.swift */; };
+		893734E7288D1AA8005824FF /* RNAGSUIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893734DB288D1AA8005824FF /* RNAGSUIColorExtension.swift */; };
+		8948F1A728E5D4CC00329F2B /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8948F1A628E5D4CC00329F2B /* URLSessionExtension.swift */; };
+		8948F1A828E5D4CC00329F2B /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8948F1A628E5D4CC00329F2B /* URLSessionExtension.swift */; };
+		898D0CFB28A6184900AB6352 /* RNAGSGeodatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898D0CFA28A6184800AB6352 /* RNAGSGeodatabase.swift */; };
+		898D0CFC28A6184900AB6352 /* RNAGSGeodatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898D0CFA28A6184800AB6352 /* RNAGSGeodatabase.swift */; };
+		898D0CFE28A6190800AB6352 /* RNAGSFeatureLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898D0CFD28A6190800AB6352 /* RNAGSFeatureLayer.swift */; };
+		898D0CFF28A6190800AB6352 /* RNAGSFeatureLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898D0CFD28A6190800AB6352 /* RNAGSFeatureLayer.swift */; };
+		898D0D0128A6196500AB6352 /* RNAGSAnnotationLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898D0D0028A6196500AB6352 /* RNAGSAnnotationLayer.swift */; };
+		898D0D0228A6196500AB6352 /* RNAGSAnnotationLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898D0D0028A6196500AB6352 /* RNAGSAnnotationLayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +84,17 @@
 		43E2ECED27BFD74500CE4E6F /* ScanButtonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScanButtonManager.m; path = ReactNativeDemo/ScanButtonManager.m; sourceTree = "<group>"; };
 		43E2ECF027C0050F00CE4E6F /* ScanButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScanButton.swift; path = ReactNativeDemo/ScanButton.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNativeDemo/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		893734D6288D1AA8005824FF /* RNAGSRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNAGSRouter.swift; sourceTree = "<group>"; };
+		893734D7288D1AA8005824FF /* RNAGSGraphicsOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNAGSGraphicsOverlay.swift; sourceTree = "<group>"; };
+		893734D8288D1AA8005824FF /* RNArcGISMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNArcGISMapViewManager.m; sourceTree = "<group>"; };
+		893734D9288D1AA8005824FF /* RNArcGISMapViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNArcGISMapViewManager.swift; sourceTree = "<group>"; };
+		893734DA288D1AA8005824FF /* RNArcGISMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNArcGISMapView.swift; sourceTree = "<group>"; };
+		893734DB288D1AA8005824FF /* RNAGSUIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNAGSUIColorExtension.swift; sourceTree = "<group>"; };
+		8948F1A628E5D4CC00329F2B /* URLSessionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
 		8984EEBB3928943EC7E86B4E /* Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo-ReactNativeDemoTests/Pods-ReactNativeDemo-ReactNativeDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		898D0CFA28A6184800AB6352 /* RNAGSGeodatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNAGSGeodatabase.swift; sourceTree = "<group>"; };
+		898D0CFD28A6190800AB6352 /* RNAGSFeatureLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNAGSFeatureLayer.swift; sourceTree = "<group>"; };
+		898D0D0028A6196500AB6352 /* RNAGSAnnotationLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNAGSAnnotationLayer.swift; sourceTree = "<group>"; };
 		9A8009474BED53957C3F7135 /* Pods-ReactNativeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo/Pods-ReactNativeDemo.release.xcconfig"; sourceTree = "<group>"; };
 		CCDEC0427E2A3985E3E26613 /* libPods-ReactNativeDemo-ReactNativeDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeDemo-ReactNativeDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D348FE8851AF48A224A48DAF /* Pods-ReactNativeDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeDemo.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeDemo/Pods-ReactNativeDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +142,7 @@
 		13B07FAE1A68108700A75B9A /* ReactNativeDemo */ = {
 			isa = PBXGroup;
 			children = (
+				893734D5288D1A1B005824FF /* Map */,
 				4347945B2805B8680034718E /* ReactNativeDemo.entitlements */,
 				434794582805A5090034718E /* GoogleService-Info.plist */,
 				43E2ECF027C0050F00CE4E6F /* ScanButton.swift */,
@@ -182,6 +213,32 @@
 				00E356EE1AD99517003FC87E /* ReactNativeDemoTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		89022E9A2898141D00B2A27C /* RNArcGISMapViewManager */ = {
+			isa = PBXGroup;
+			children = (
+				893734D8288D1AA8005824FF /* RNArcGISMapViewManager.m */,
+				893734D9288D1AA8005824FF /* RNArcGISMapViewManager.swift */,
+			);
+			path = RNArcGISMapViewManager;
+			sourceTree = "<group>";
+		};
+		893734D5288D1A1B005824FF /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				89022E9A2898141D00B2A27C /* RNArcGISMapViewManager */,
+				893734D7288D1AA8005824FF /* RNAGSGraphicsOverlay.swift */,
+				893734D6288D1AA8005824FF /* RNAGSRouter.swift */,
+				893734DB288D1AA8005824FF /* RNAGSUIColorExtension.swift */,
+				893734DA288D1AA8005824FF /* RNArcGISMapView.swift */,
+				898D0CFA28A6184800AB6352 /* RNAGSGeodatabase.swift */,
+				898D0CFD28A6190800AB6352 /* RNAGSFeatureLayer.swift */,
+				898D0D0028A6196500AB6352 /* RNAGSAnnotationLayer.swift */,
+				8948F1A628E5D4CC00329F2B /* URLSessionExtension.swift */,
+			);
+			name = Map;
+			path = ReactNativeDemo/Map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,13 +512,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				893734E1288D1AA8005824FF /* RNArcGISMapViewManager.m in Sources */,
+				893734DF288D1AA8005824FF /* RNAGSGraphicsOverlay.swift in Sources */,
 				4326F74027BD113900906A4D /* BarcodeScannerWrapper.swift in Sources */,
+				8948F1A828E5D4CC00329F2B /* URLSessionExtension.swift in Sources */,
 				43E2ECE927BFD1AD00CE4E6F /* ScanButtonManager.swift in Sources */,
 				4326F74627BD156300906A4D /* BarcodeScannerWrapper.m in Sources */,
 				43E2ECF227C0050F00CE4E6F /* ScanButton.swift in Sources */,
+				893734E3288D1AA8005824FF /* RNArcGISMapViewManager.swift in Sources */,
 				4326F73B27BD0F2B00906A4D /* RCTCalendarModule.m in Sources */,
+				898D0D0228A6196500AB6352 /* RNAGSAnnotationLayer.swift in Sources */,
+				893734DD288D1AA8005824FF /* RNAGSRouter.swift in Sources */,
+				893734E5288D1AA8005824FF /* RNArcGISMapView.swift in Sources */,
+				898D0CFC28A6184900AB6352 /* RNAGSGeodatabase.swift in Sources */,
 				43E2ECEF27BFD74500CE4E6F /* ScanButtonManager.m in Sources */,
 				00E356F31AD99517003FC87E /* ReactNativeDemoTests.m in Sources */,
+				898D0CFF28A6190800AB6352 /* RNAGSFeatureLayer.swift in Sources */,
+				893734E7288D1AA8005824FF /* RNAGSUIColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,12 +537,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				898D0CFB28A6184900AB6352 /* RNAGSGeodatabase.swift in Sources */,
 				43E2ECEE27BFD74500CE4E6F /* ScanButtonManager.m in Sources */,
+				893734E6288D1AA8005824FF /* RNAGSUIColorExtension.swift in Sources */,
 				4326F73F27BD113900906A4D /* BarcodeScannerWrapper.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				898D0CFE28A6190800AB6352 /* RNAGSFeatureLayer.swift in Sources */,
+				893734E2288D1AA8005824FF /* RNArcGISMapViewManager.swift in Sources */,
+				893734DC288D1AA8005824FF /* RNAGSRouter.swift in Sources */,
+				893734E4288D1AA8005824FF /* RNArcGISMapView.swift in Sources */,
+				893734DE288D1AA8005824FF /* RNAGSGraphicsOverlay.swift in Sources */,
+				893734E0288D1AA8005824FF /* RNArcGISMapViewManager.m in Sources */,
 				43E2ECF127C0050F00CE4E6F /* ScanButton.swift in Sources */,
 				4326F74527BD156300906A4D /* BarcodeScannerWrapper.m in Sources */,
+				8948F1A728E5D4CC00329F2B /* URLSessionExtension.swift in Sources */,
 				4326F73A27BD0F2B00906A4D /* RCTCalendarModule.m in Sources */,
+				898D0D0128A6196500AB6352 /* RNAGSAnnotationLayer.swift in Sources */,
 				43E2ECE827BFD1AD00CE4E6F /* ScanButtonManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -658,7 +735,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -716,7 +793,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
