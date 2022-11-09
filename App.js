@@ -21,6 +21,7 @@ import messaging from '@react-native-firebase/messaging';
 import Map from "./components/Map";
 import MapVectorTilePackage from "./components/MapVectorTilePackage";
 import MapGeodatabase from "./components/MapGeodatabase";
+import ExportVectorTiles from "./components/ExportVectorTiles";
 
 const Stack = createNativeStackNavigator();
 const navigationRef = React.createRef();
@@ -107,6 +108,7 @@ const App = ({ isHeadless }) => {
         <Stack.Screen name="Map" component={Map} />
         <Stack.Screen name="MapVectorTilePackage" component={MapVectorTilePackage} />
         <Stack.Screen name="MapGeodatabase" component={MapGeodatabase} />
+        <Stack.Screen name="ExportVectorTiles" component={ExportVectorTiles} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -135,6 +137,7 @@ const HomeScreen = ({ navigation }) => {
       <Button title="Map (Online)" onPress={() => navigation.navigate('Map', {})} />
       <Button title="Map (Vector Tile Package)" onPress={() => navigation.navigate('MapVectorTilePackage', {})} />
       <Button title="Map (Geodatabase)" onPress={() => navigation.navigate('MapGeodatabase', {})} />
+      <Button title="Export vector tiles" onPress={() => navigation.navigate('ExportVectorTiles', {})} />
     </>
   );
 };
